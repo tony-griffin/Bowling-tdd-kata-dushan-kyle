@@ -1,19 +1,23 @@
-class Bowling
 
+
+class Bowling
     def score(pins)
-        return 0 if pins.nil?
-        if pins.size > 1
-            if pins[0] + pins[1] == 10
-                return 10 + pins[2] + pins[2] + pins[3]
-            end
+        total = 0
+        return total if pins.nil?
+        return pins.first if pins.size == 1
+        pins.each do |roll|
+           if pins[0] + pins[1] == 10
+                return 10 + pins[2] + pins[2]          
+           end
+           total += roll
         end
-        pins.sum
+        total
     end
 end
 
 
 describe Bowling do
-
+    
    it "scores no balls as 0" do
     expect(subject.score(nil)).to eq(0)
    end
@@ -42,11 +46,17 @@ describe Bowling do
     expect(subject.score([0,1])).to eq(1)
    end
 
-   it "scores a spare in a frame and returns score" do
-    expect(subject.score([9,1,1,0])).to eq(12)   
+   it "hits 1 pin on 3 balls" do
+    expect(subject.score([1,1,1])).to eq(3)
    end
 
+   it "hits 1 pin on 4 balls" do
+    expect(subject.score([1,1,1,1])).to eq(4)
+   end
 
+   it "scores one spare" do
+    expect(subject.score([1,9,1])).to eq(12)
+   end
 
 end
 
